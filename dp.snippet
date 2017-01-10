@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>依存プロパティ</Title>
+            <Shortcut>dp</Shortcut>
+            <Description>依存プロパティのコードスニペット</Description>
+            <Author>広大</Author>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>PropertyType</ID>
+                    <ToolTip>プロパティの型</ToolTip>
+                    <Default>int</Default>
+                </Literal>
+                <Literal>
+                    <ID>PropertyName</ID>
+                    <ToolTip>プロパティの名前</ToolTip>
+                    <Default>Num</Default>
+                </Literal>
+                <Literal>
+                    <ID>OwnerType</ID>
+                    <ToolTip>所属するクラスの型</ToolTip>
+                    <Default>MyControl</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="csharp"><![CDATA[public $PropertyType$ $PropertyName$
+            {
+                get { return ($PropertyType$)GetValue($PropertyName$Property); }
+                set { SetValue($PropertyName$Property, value); }
+            }
+            
+            public static readonly DependencyProperty $PropertyName$Property = DependencyProperty.Register(
+                name: "$PropertyName$",
+                propertyType: typeof($PropertyType$),
+                ownerType: typeof($OwnerType$),
+                typeMetadata: new FrameworkPropertyMetadata(
+                    propertyChangedCallback: $PropertyName$PropertyChangedCallback,
+                    coerceValueCallback: $PropertyName$PropertyCoerceValueCallback));
+            
+            static void $PropertyName$PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            {
+                (d as $OwnerType$).$PropertyName$PropertyChanged(e);
+            }
+            
+            static object $PropertyName$PropertyCoerceValueCallback(DependencyObject d, object baseValue)
+            {
+                return (d as $OwnerType$).$PropertyName$PropertyCoerceValue(($PropertyType$)baseValue);
+            }
+            
+            void $PropertyName$PropertyChanged(DependencyPropertyChangedEventArgs e)
+            {
+                throw new NotImplementedException();
+            }
+            
+            $PropertyType$ $PropertyName$PropertyCoerceValue($PropertyType$ baseValue)
+            {
+                throw new NotImplementedException();
+            }$end$]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
